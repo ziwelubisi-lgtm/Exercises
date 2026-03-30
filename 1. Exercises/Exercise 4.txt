@@ -1,0 +1,120 @@
+-- INNER JOIN 
+SELECT 
+    e.EmployeeID, e.FirstName, e.LastName, e.Department, e.Salary,
+    p.ProjectID, p.ProjectName, p.Budget, p.Status
+FROM Employees e
+INNER JOIN Projects p
+ON e.EmployeeID = p.EmployeeID;
+
+-- LEFT JOIN
+SELECT 
+    e.EmployeeID, e.FirstName, e.LastName, e.Department, e.Salary,
+    p.ProjectID, p.ProjectName, p.Budget, p.Status
+FROM Employees e
+LEFT JOIN Projects p
+ON e.EmployeeID = p.EmployeeID;
+
+-- RIGHT JOIN 
+SELECT 
+    p.ProjectID, p.ProjectName, p.Budget, p.Status,
+    e.EmployeeID, e.FirstName, e.LastName, e.Department, e.Salary
+FROM Employees e
+RIGHT JOIN Projects p
+ON e.EmployeeID = p.EmployeeID;
+
+-- FULL OUTER JOIN 
+SELECT 
+    e.EmployeeID, e.FirstName, e.LastName, e.Department, e.Salary,
+    p.ProjectID, p.ProjectName, p.Budget, p.Status
+FROM Employees e
+FULL OUTER JOIN Projects p
+ON e.EmployeeID = p.EmployeeID;
+
+-- UNION and UNION ALL 
+SELECT 
+City AS Location FROM Employees
+UNION
+SELECT Status AS Location FROM Projects;
+
+-- UNION ALL with Duplicates 
+SELECT 
+City AS Location FROM Employees
+UNION ALL
+SELECT Status AS Location FROM Projects;
+
+-- 7. FILTERING STATEMENT 
+
+SELECT EmployeeID, FirstName, LastName, Department, Salary
+FROM Employees
+WHERE Salary > 70000;
+
+-- 8. IT or Finance 
+SELECT 
+EmployeeID, FirstName, LastName, Department, Salary
+FROM Employees
+WHERE Department IN ('IT', 'Finance');
+
+-- 9. Project NOT completed 
+SELECT 
+ProjectID, ProjectName, Budget, Status
+FROM Projects
+WHERE Status <> 'Completed';
+
+-- 10. Budget > 70 000 + NOT completed
+SELECT 
+ProjectID, ProjectName, Budget, Status
+FROM Projects
+WHERE Budget > 70000
+AND Status <> 'Completed';
+
+-- 11. Employees from New York or Toronto
+SELECT 
+EmployeeID, FirstName, LastName, Department, Salary, City
+FROM Employees
+WHERE City IN ('New York', 'Toronto')
+ORDER BY Salary DESC;
+
+-- 12. Top 3 Highest Paid employees 
+SELECT 
+EmployeeID, FirstName, LastName, Department, Salary
+FROM Employees
+ORDER BY Salary DESC
+LIMIT 3;
+
+-- 13. Total Salary per department 
+SELECT 
+Department, SUM(Salary) AS TotalSalary
+FROM Employees
+GROUP BY Department
+ORDER BY TotalSalary DESC;
+
+-- 14. Average salary per city (> 65,000)
+SELECT 
+City, AVG(Salary) AS AverageSalary
+FROM Employees
+GROUP BY City
+HAVING AVG(Salary) > 65000;
+
+-- 15. Employees per department (>1 employee)
+SELECT 
+Department, COUNT(EmployeeID) AS EmployeeCount
+FROM Employees
+GROUP BY Department
+HAVING COUNT(EmployeeID) > 1;
+
+-- 16. Projects per status - 2 
+SELECT 
+Status, COUNT(ProjectID) AS ProjectCount
+FROM Projects
+GROUP BY Status
+HAVING COUNT(ProjectID) >= 2;
+
+-- 17. Total project budget per employee (>150,000)
+SELECT 
+    e.EmployeeID, e.FirstName, e.LastName,
+    SUM(p.Budget) AS TotalProjectBudget
+FROM Employees e
+JOIN Projects p
+ON e.EmployeeID = p.EmployeeID
+GROUP BY e.EmployeeID, e.FirstName, e.LastName
+HAVING SUM(p.Budget) > 150000;

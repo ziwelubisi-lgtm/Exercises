@@ -1,0 +1,66 @@
+EX 2
+
+-- COUNT Function 
+
+SELECT COUNT(employee_id)
+FROM employees; 
+
+-- SUM Function 
+SELECT SUM(salary) as total_salary 
+FROM employees 
+WHERE department = 'IT' ; 
+
+-- AVG function 
+SELECT AVG(salary) as avg_salary 
+FROM employees 
+WHERE department = 'HR'; 
+
+-- MIN and MAX Function 
+SELECT 
+    MIN(salary) AS lowest_salary,
+    MAX(salary) AS highest_salary
+FROM employees;
+
+-- GROUP BY statement 
+SELECT department, SUM(salary) as total_salary 
+FROM employees 
+GROUP BY department ;
+
+-- GROUP BY and COUNT() 
+SELECT city , COUNT(employee_id) as employee_amount
+FROM employees 
+GROUP BY city ;
+
+-- GROUP BY and ORDER BY 
+SELECT 
+    department,
+    AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department
+ORDER BY avg_salary DESC;
+
+-- HAVING Clause 
+SELECT 
+    department,
+    SUM(salary) AS total_salary
+FROM employees
+GROUP BY department
+HAVING SUM(salary) > 1000; 
+
+-- Combining GROUP BY, HAVING, and ORDER BY
+SELECT 
+    city,
+    COUNT(*) AS employee_count
+FROM employees
+GROUP BY city
+HAVING COUNT(*) > 1
+ORDER BY employee_count DESC;
+
+--  Combining Aggregate Functions
+SELECT 
+    department,
+    AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department
+ORDER BY avg_salary DESC
+LIMIT 1;
