@@ -17,3 +17,4 @@ Filter grouped data using HAVING
 Combine tables using JOIN operations
 Use UNION to merge result sets
 Apply conditional logic using CASE
+Use NULL and DATE Functions
